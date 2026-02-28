@@ -1,5 +1,6 @@
 import {
     registerUser,
+    fetchUserById,
     fetchAllDoctors,
     fetchAllReceptionists,
     modifyUser,
@@ -25,6 +26,19 @@ const getAllReceptionists = async (req, res) => {
         res
             .status(200)
             .json({ message: "Receptionists fetched successfully", data: receptionists });
+    } catch (error) {
+        res
+            .status(error.status || 500)
+            .json({ message: error.message || "Internal server error" });
+    }
+};
+
+// GET /api/users/:id — Get a single user by ID
+const getUserById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await fetchUserById(id);
+        res.status(200).json({ message: "User fetched successfully", data: user });
     } catch (error) {
         res
             .status(error.status || 500)
@@ -72,4 +86,4 @@ const deleteUser = async (req, res) => {
     }
 };
 
-export { getAllDoctors, getAllReceptionists, createUser, updateUser, deleteUser };
+export { getAllDoctors, getAllReceptionists, getUserById, createUser, updateUser, deleteUser };

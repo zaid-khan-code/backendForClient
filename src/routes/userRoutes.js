@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
     getAllDoctors,
     getAllReceptionists,
+    getUserById,
     createUser,
     updateUser,
     deleteUser,
@@ -14,6 +15,9 @@ router.get("/doctors", getAllDoctors);
 
 // GET /api/users/receptionists — Get all receptionists
 router.get("/receptionists", getAllReceptionists);
+
+// GET /api/users/:id — Get a single user by ID
+router.get("/:id", getUserById);
 
 // POST /api/users — Create a new user
 router.post("/", createUser);

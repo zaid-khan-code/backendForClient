@@ -25,6 +25,20 @@ const registerUser = async (name, email, password, role_id, specialty) => {
     return user;
 };
 
+// Get a single user by ID
+const fetchUserById = async (id) => {
+    if (!id) {
+        throw { status: 400, message: "User ID is required" };
+    }
+
+    const user = await findById(id);
+    if (!user) {
+        throw { status: 404, message: "User not found" };
+    }
+
+    return user;
+};
+
 // Get all doctors
 const fetchAllDoctors = async () => {
     const doctors = await getAllDoctors();
@@ -78,6 +92,7 @@ const removeUser = async (id) => {
 
 export {
     registerUser,
+    fetchUserById,
     fetchAllDoctors,
     fetchAllReceptionists,
     modifyUser,
