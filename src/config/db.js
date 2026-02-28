@@ -1,24 +1,23 @@
-import pg from "pg";
-const { Pool } = pg;
+import pg from 'pg'
+import dotenv from 'dotenv'
 
-// Create PostgreSQL connection pool using environment variables
+dotenv.config()
+
+const { Pool } = pg
+
 const pool = new Pool({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     database: process.env.DB_NAME,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-});
+    ssl: {
+        rejectUnauthorized: false
+    }
+})
 
-// Test database connection
-pool
-    .connect()
-    .then((client) => {
-        console.log("✅ Connected to PostgreSQL database successfully");
-        client.release();
-    })
-    .catch((err) => {
-        console.error("❌ Failed to connect to PostgreSQL database:", err.message);
-    });
+pool.connect()
+    .then(() => console.log('Connected to Neon PostgreSQL successfully'))
+    .catch((err) => console.error('Database connection error:', err))
 
-export default pool; 
+export default pool
